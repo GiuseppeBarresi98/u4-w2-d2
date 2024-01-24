@@ -3,6 +3,7 @@ package org.example.Class;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "eventi")
@@ -19,6 +20,13 @@ public class Evento {
 
     private int numeroMassimoPartecipanti;
 
+    @OneToMany(mappedBy = "evento")
+    private List<Partecipazioni> partecipazioni;
+
+   @OneToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
     public Evento(String titolo, LocalDate dataEvento, tipoEvento tipoEvento, int numeroMassimoPartecipanti){
         this.titolo = titolo;
         this.dataEvento = dataEvento;
@@ -29,6 +37,8 @@ public class Evento {
     public Evento() {
 
     }
+
+
 
     public String getTitolo() {
         return titolo;

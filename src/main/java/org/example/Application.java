@@ -1,13 +1,17 @@
 package org.example;
 
-import org.example.Class.Evento;
-import org.example.Class.EventoDAO;
-import org.example.Class.tipoEvento;
+import ServiceDAO.EventoDAO;
+import ServiceDAO.LocationDao;
+import ServiceDAO.PartecipazioniDAO;
+import ServiceDAO.PersonaDAO;
+import org.example.Class.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
 
@@ -16,22 +20,23 @@ public class Application {
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
         EventoDAO event = new EventoDAO(em);
+        LocationDao location = new LocationDao(em);
+        PartecipazioniDAO partecipazione = new PartecipazioniDAO(em);
+        PersonaDAO persona = new PersonaDAO(em);
 
-        Evento evento1 = new Evento("Maneskin", LocalDate.of(2007, 12, 3), tipoEvento.PUBBLICO,500);
-        Evento evento2 = new Evento("Tiziano Ferro", LocalDate.of(2007, 12, 3), tipoEvento.PUBBLICO,500);
+        Location loc1 = new Location("Grezzan", "Verona");
+        Location lo2 = new Location("Roma","lazio");
+        Evento ev1 = new Evento("giuseppe", LocalDate.of(1998, 4, 23),tipoEvento.PUBBLICO,250);
 
+        List<Location> luoghi = new ArrayList<>();
+        event.saveEvent(ev1);
+        Persona ps1 = new Persona("Luca", "Fava", "fava@iammi.it", LocalDate.parse("1995-01-01"), Sesso.UOMO);
+        Partecipazioni pa1 = new Partecipazioni(ps1, ev1, Stato.CONFERMATA);
+        luoghi.add(lo2);
+        luoghi.add(loc1);
 
-
-        event.deleteEventbyId(1);
-        event.deleteEventbyId(2);
-        event.deleteEventbyId(3);
-
-
-
-        Evento eventoById = event.getById(1);
-        System.out.println(eventoById.getNumeroMassimoPartecipanti());
-
+        persona.savePersona(ps1);
+        partecipazione.savePartecipazione(pa1);
+        location.saveLocation(loc1);
     }
-
-
 }

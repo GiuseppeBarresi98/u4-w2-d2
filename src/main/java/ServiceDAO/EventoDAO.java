@@ -1,4 +1,6 @@
-package org.example.Class;
+package ServiceDAO;
+
+import org.example.Class.Evento;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
