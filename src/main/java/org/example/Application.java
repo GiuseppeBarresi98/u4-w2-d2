@@ -10,8 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Application {
 
@@ -26,17 +24,34 @@ public class Application {
 
         Location loc1 = new Location("Grezzan", "Verona");
         Location lo2 = new Location("Roma","lazio");
-        Evento ev1 = new Evento("giuseppe", LocalDate.of(1998, 4, 23),tipoEvento.PUBBLICO,250);
+        Evento ev1 = new Evento("Concerto", LocalDate.of(1998, 4, 23),tipoEvento.PUBBLICO,250,lo2);
 
-        List<Location> luoghi = new ArrayList<>();
+
+        location.saveLocation(loc1);
+        location.saveLocation(lo2);
         event.saveEvent(ev1);
         Persona ps1 = new Persona("Luca", "Fava", "fava@iammi.it", LocalDate.parse("1995-01-01"), Sesso.UOMO);
         Partecipazioni pa1 = new Partecipazioni(ps1, ev1, Stato.CONFERMATA);
-        luoghi.add(lo2);
-        luoghi.add(loc1);
 
-        persona.savePersona(ps1);
-        partecipazione.savePartecipazione(pa1);
-        location.saveLocation(loc1);
+        Location concertoloc = new Location("Roma","Lazio");
+       location.saveLocation(concertoloc);
+        Concerti concerto = new Concerti("Olimpico x Ferro", LocalDate.now(),tipoEvento.PUBBLICO,25000,concertoloc,Genere.CLASSICO,true);
+        Concerti concerto2 = new Concerti("Queen Live at Wembley - In Streaming", LocalDate.now(), tipoEvento.PUBBLICO, 1, concertoloc, Genere.ROCK,true);
+        Concerti concerto3 = new Concerti("Queen Live at Wembley - In Streaming", LocalDate.now(), tipoEvento.PUBBLICO, 1, concertoloc, Genere.ROCK,false);
+
+        event.saveEvent(concerto2);
+        event.saveEvent(concerto);
+        event.saveEvent(concerto3);
+
+        event.trovaPerGenere(Genere.ROCK).forEach(System.out::println);
+        event.trovaPerStreaming(true).forEach(System.out::println);
+
+        //persona.savePersona(ps1);
+       // partecipazione.savePartecipazione(pa1);
+
+
+        System.out.println(ev1.toString());
+        System.out.println(ps1.toString());
+
     }
 }

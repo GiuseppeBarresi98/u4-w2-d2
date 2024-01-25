@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "eventi")
-public class Evento {
+
+public  class Evento {
     @Id
     @GeneratedValue
     private Long Id;
@@ -27,11 +29,12 @@ public class Evento {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    public Evento(String titolo, LocalDate dataEvento, tipoEvento tipoEvento, int numeroMassimoPartecipanti){
+    public Evento(String titolo, LocalDate dataEvento, tipoEvento tipoEvento, int numeroMassimoPartecipanti,Location location){
         this.titolo = titolo;
         this.dataEvento = dataEvento;
         this.tipoEvento = tipoEvento;
         this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
+        this.location = location;
     };
 
     public Evento() {
@@ -68,5 +71,16 @@ public class Evento {
         return dataEvento;
     }
 
-
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "Id=" + Id +
+                ", titolo='" + titolo + '\'' +
+                ", dataEvento=" + dataEvento +
+                ", tipoEvento=" + tipoEvento +
+                ", numeroMassimoPartecipanti=" + numeroMassimoPartecipanti +
+                ", partecipazioni=" + partecipazioni +
+                ", location=" + location +
+                '}';
+    }
 }

@@ -1,9 +1,14 @@
 package ServiceDAO;
 
 import org.example.Class.Evento;
+import org.example.Class.Genere;
+import org.example.Class.Concerti;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class EventoDAO {
 
@@ -25,6 +30,8 @@ public class EventoDAO {
         return em.find(Evento.class,Id);
     };
 
+
+
     public void deleteEventbyId(long Id){
       Evento eventoDaEliminare = em.find(Evento.class,Id);
 
@@ -40,6 +47,20 @@ public class EventoDAO {
       else {
           System.out.println("Elemento con id:" + Id + "non è stato trovato");
       }
+
+    };
+
+
+    public List<Concerti> trovaPerGenere(Genere genere){
+        TypedQuery<Concerti> getall = em.createQuery("SELECT c FROM Concerti c WHERE c.genere=:g", Concerti.class);
+        getall.setParameter("g",genere);
+        return getall.getResultList();
+    };
+
+    public List<Concerti> trovaPerStreaming(boolean streaming){
+        TypedQuery<Concerti> getList = em.createQuery("SELECT c From Concerti c WHERE c.streaming=:g", Concerti.class);
+        getList.setParameter("g",streaming);
+        return getList.getResultList();
 
     };
 
