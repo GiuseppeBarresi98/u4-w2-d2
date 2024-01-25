@@ -1,9 +1,9 @@
 package ServiceDAO;
 
+import org.example.Class.Concerti;
 import org.example.Class.Evento;
 import org.example.Class.Genere;
-import org.example.Class.Concerti;
-
+import org.example.Class.partitaDiCalcio;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -62,6 +62,15 @@ public class EventoDAO {
         getList.setParameter("g",streaming);
         return getList.getResultList();
 
+    };
+
+    public List<partitaDiCalcio> getPartiteVinteInCasa(){
+        return em.createNamedQuery("get_partite_vinte_incasa", partitaDiCalcio.class).getResultList();
+
+    };
+
+    public List<partitaDiCalcio> getPartiteVinteInTrasfera(){
+        return em.createNamedQuery("get_partite_vinte_intrasferta", partitaDiCalcio.class).getResultList();
     };
 
 
